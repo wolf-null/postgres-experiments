@@ -1,52 +1,75 @@
 ------------------------------------------------------ CLEANUP ---------------------------------------------------------
-drop table if exists Domains;
-drop table if exists DomainStructure;
-drop table if exists Nodes;
-drop table if exists Projects;
-drop table if exists Items;
+drop table if exists domains;
+drop table if exists subdomain_structure;
+drop table if exists nodes;
+drop table if exists nodes_in_domain;
+drop table if exists projects;
+drop table if exists projects_in_domain;
 
------------------------------------------------------- DATABASE --------------------------------------------------------
-create table Items
+------------------------------------------------------ DOMAINS ---------------------------------------------------------
+create table domains
 (
-    "id"          serial          primary key  unique,
-    "name"        varchar(64)
+    id                  serial,
+    name                varchar(128),
+    primary key (id)
 );
 
-create table DomainStructure
+/*Domains might have subdomains*/
+create table subdomain_structure
 (
-    "id"          serial,
-    "parent"      integer not null,
-    "child"       integer not null,
+    id                  serial,
+    parent_domain       integer,
+    child_domain        integer,
 
-    primary key ("id"),
-    foreign key ("parent") references Items("id"),
-    foreign key ("child") references Items("id")
+    primary key (id),
+    foreign key (parent_domain) references domains(id),
+    foreign key (child_domain) references domains(id)
 );
 
-create table Projects
+------------------------------------------------------- NODES ----------------------------------------------------------
+
+create table nodes
 (
-----"id"          serial          [::Items]
-----"name"        varchar(64)     [::Items]
-    "description" varchar(256)
-)
-inherits(Items);
+    id              serial,
+    name            varchar(64),
+    description     varchar(256),
+    ip              inet,
+    mac             macaddr,
 
-create table Nodes
+    primary key (id)
+);
+
+create table nodes_in_domain
 (
-----"id"          serial          [::Items]
-----"name"        varchar(64)     [::Items]
-    "ip"          inet,
-    "mac"         macaddr,
-    "location"    varchar(256)
-) inherits(Items);
+    id                  serial,
+    node                integer,
+    domain              integer,
 
-create or replace function GetNodeID(inet) returns integer as
-$$
-    select id from Nodes where Nodes.ip = $1 fetch first row only;
-$$ language SQL;
+    primary key (id),
+    foreign key (node) references nodes(id),
+    foreign key (domain) references domains(id)
+);
 
-create or replace function GetProjectID(varchar) returns integer as
-$$
-    select id from Projects where Projects.name = $1 fetch first row only;
-$$ language SQL;
+----------------------------------------------------- PROJECTS ---------------------------------------------------------
+
+create table projects
+(
+    id                  serial,
+    name                varchar(64),
+
+    primary key (id)
+);
+
+create table projects_in_domain
+(
+    id                  serial,
+    project             integer,
+    domain              integer,
+
+    primary key (id),
+    foreign key (project) references projects(id),
+    foreign key (domain) references domains(id)
+);
+
+---------------------------------------------------- FUNCTIONS ---------------------------------------------------------
 
