@@ -23,31 +23,16 @@ insert into Nodes(name, ip)
     select New.name, New.ip from New left join Nodes on New.name = Nodes.name where Nodes.name is null
 );
 
+--insert into Items(name) values ('awoo');
+
 insert into Projects(name, description)
     values
     ('AwooL3', 'VRF between Durham, Chertsey and Seaham'),
     ('Ch',     'Pseudo-L2 Durham & Chertsey');
 
+reindex schema public;
 
-
--------------------------------------------------- TEST FUNCTIONS ------------------------------------------------------
-drop table if exists TestProject;
-create table TestProject
-(
-    id      serial      primary key,
-    parent  integer,
-    child   integer
-);
-insert into TestProject(parent, child) values
-    (GetProjectID('AwooL3'), GetNodeID(inet('10.10.10.201')));
-select * from TestProject;
-
-
-
-/*A dumb way to delete everything. One can use 'delete from Projects' but...
-delete from Projects where exists
-(
-    select 1 from Projects
-);
-*/
+insert into DomainStructure(parent, child) values
+    (8,1);
+    --((select id from Items where id=8), ((select id from Items where id=1)));
 
