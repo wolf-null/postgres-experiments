@@ -1,3 +1,4 @@
+delete from tessst.public.nodes_in_domain;
 delete from nodes;
 delete from projects_in_domain;
 delete from projects;
@@ -6,6 +7,25 @@ delete from domains;
 
 alter sequence nodes_id_seq restart with 1;
 alter sequence projects_id_seq restart with 1;
+
+/*
+    TODO:
+        [X] Domains
+            [X] Add nodes
+            [X] Add domain nodes
+            [X] Add domains and attach the roles
+            [X] 'Hierarchize' domains
+        [X] Projects
+            [X] Create projects and attach it to proper domains
+            [X] Attach nodes to domains
+        [ ] Events
+            [ ] Event types
+            [ ] Events
+                [ ] Randomly generated
+            [ ] Number of events of the selected kind
+            [ ] Report on event numbers
+
+*/
 
 insert into nodes(name, ip)
 (
@@ -64,35 +84,26 @@ insert into projects_in_domain(project, domain)
     (proj_by_name('AwooL3'), domain_by_name('Services-for-Alice')),
     (proj_by_name('TheCh'), domain_by_name('Services-for-Bob'));
 
-/*insert into nodes_in_domain(node, domain)*/
-
-    /*with channels_readable(ar, br, chr) as
+insert into nodes_in_domain(node, domain)
+(
+    with new_nodes_in_domain(_node, _domain) as
     (
         values
-        ('ElephantAndCastle-CCR1036',   'Durham-RB3011',    'Channel-A'),
-        ('ElephantAndCastle-CCR1036',   'Chertsey-RB2011',  'Channel-B'),
-        ('ElephantAndCastle-CCR1036',   'Seaham',           'Channel-C'),
-        ('Durham-RB3011',               'Chertsey-RBLHGR',  'Channel-D'),
-        ('Chertsey-RBLHGR',             'Chertsey-RB2011',  'Channel-D')
-    ),
-     */
+            ('ElephantAndCastle-CCR1036', 'Channel-A'),
+            ('ElephantAndCastle-CCR1036', 'Channel-B'),
+            ('ElephantAndCastle-CCR1036', 'Channel-C'),
+            ('Durham-RB3011', 'Channel-A'),
+            ('Durham-RB3011', 'Channel-D'),
+            ('Chertsey-RB2011', 'Channel-B'),
+            ('Chertsey-RB2011', 'Channel-D'),
+            ('Chertsey-RBLHGR', 'Channel-D'),
+            ('Seaham', 'Channel-C')
+    )
+    select node_by_name(_node), domain_by_name(_domain) from new_nodes_in_domain
+);
 
+---------------------------------------------------------- EVENTS ------------------------------------------------------
 
-    /*
-     first_row as (select ar as nd from channels_readable),
-    second_row as (select br as nd from channels_readable),
-    both_rows as (select * from first_row union select * from second_row),
-    nodes_used(node) as (select distinct nd from both_rows)
-     */
-
-
-
-
-
-/*
-select domains.name from
-    domains left join domain_roles
-    on domains.domain_role = domain_roles.id where domain_roles.domain_role='networks';
-*/
-/*Now, assume, some particukla*/
-
+insert into event_types(event_name, level) values
+    ('err_fatal',   3),
+    ('err',         2);

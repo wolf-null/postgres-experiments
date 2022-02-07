@@ -7,6 +7,8 @@ drop table if exists projects cascade ;
 drop table if exists projects_in_domain cascade ;
 drop table if exists domain_roles cascade ;
 drop table if exists domains;
+drop table if exists events cascade;
+drop table if exists event_types cascade;
 ------------------------------------------------------ DOMAINS ---------------------------------------------------------
 create table domain_roles
 (
@@ -83,6 +85,26 @@ create table projects_in_domain
     primary key (id),
     foreign key (project) references projects(id),
     foreign key (domain) references domains(id)
+);
+
+-------------------------------------------------------- MON -----------------------------------------------------------
+
+create table event_types
+(
+    id          serial,
+    event_name  varchar(32),
+    level       integer,
+    primary key (id)
+);
+
+create table events
+(
+    id          serial,
+    event       integer,
+    node        integer,
+    primary key (id),
+    foreign key (event) references event_types(id),
+    foreign key (node) references nodes(id)
 );
 
 ---------------------------------------------------- FUNCTIONS ---------------------------------------------------------
