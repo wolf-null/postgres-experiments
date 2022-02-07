@@ -35,7 +35,7 @@ $$;
 
 call generate_random_events(100);
 
-select node, count(*) from events group by node order by node asc `
+select node, count(*) from events group by node order by node asc
 
 
 ----------------------------------------------------- EVENT STATISTICS -------------------------------------------------
