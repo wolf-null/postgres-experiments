@@ -8,27 +8,6 @@ delete from domains;
 alter sequence nodes_id_seq restart with 1;
 alter sequence projects_id_seq restart with 1;
 
-/*
-    TODO:
-        [X] Domains
-            [X] Add nodes
-            [X] Add domain nodes
-            [X] Add domains and attach the roles
-            [X] 'Hierarchize' domains
-        [X] Projects
-            [X] Create projects and attach it to proper domains
-            [X] Attach nodes to domains
-        [X] Events
-            [X] Event types
-            [X] Events
-                [X] Randomly generated
-            [X] Number of events of the selected kind
-            [ ] Report on event numbers
-        [ ] Events +
-            [ ] Timestamps (considering generation via a python script)
-
-*/
-
 insert into nodes(name, ip)
 (
     /*The trick is not to add the already existed elements (not by id)*/

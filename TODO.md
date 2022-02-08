@@ -1,0 +1,17 @@
+####    TODO - list
+ - [X] Domains
+   - [X] Add nodes
+   - [X] Add domain nodes
+   - [X] Add domains and attach the roles
+   - [X] 'Hierarchize' domains
+ - [X] Projects
+   - [X] Create projects and attach it to proper domains
+   - [X] Attach nodes to domains
+ - [X] Events
+   - [X] Event types
+   - [X] Events
+       - [X] Randomly generated
+   - [X] Number of events of the selected kind
+   - [ ] Report on event numbers
+ - [ ] Events (adv.)
+   - [ ] Timestamps (considering generation via a python script)
