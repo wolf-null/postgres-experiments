@@ -1,4 +1,4 @@
-delete from tessst.public.nodes_in_domain;
+delete from nodes_in_domain;
 delete from nodes;
 delete from projects_in_domain;
 delete from projects;
@@ -18,12 +18,14 @@ alter sequence projects_id_seq restart with 1;
         [X] Projects
             [X] Create projects and attach it to proper domains
             [X] Attach nodes to domains
-        [ ] Events
-            [ ] Event types
-            [ ] Events
-                [ ] Randomly generated
-            [ ] Number of events of the selected kind
+        [X] Events
+            [X] Event types
+            [X] Events
+                [X] Randomly generated
+            [X] Number of events of the selected kind
             [ ] Report on event numbers
+        [ ] Events +
+            [ ] Timestamps (considering generation via a python script)
 
 */
 
