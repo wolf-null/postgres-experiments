@@ -35,7 +35,10 @@ $$;
 
 call generate_random_events(100);
 
-select node, count(*) from events group by node order by node asc
+select node, count(*) as "Number of events" from events
+    where event=2 and events.id >= 5
+    group by node
+    order by node asc
 
 
 ----------------------------------------------------- EVENT STATISTICS -------------------------------------------------

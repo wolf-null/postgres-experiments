@@ -1,4 +1,4 @@
-delete from tessst.public.nodes_in_domain;
+delete from nodes_in_domain;
 delete from nodes;
 delete from projects_in_domain;
 delete from projects;
@@ -7,25 +7,6 @@ delete from domains;
 
 alter sequence nodes_id_seq restart with 1;
 alter sequence projects_id_seq restart with 1;
-
-/*
-    TODO:
-        [X] Domains
-            [X] Add nodes
-            [X] Add domain nodes
-            [X] Add domains and attach the roles
-            [X] 'Hierarchize' domains
-        [X] Projects
-            [X] Create projects and attach it to proper domains
-            [X] Attach nodes to domains
-        [ ] Events
-            [ ] Event types
-            [ ] Events
-                [ ] Randomly generated
-            [ ] Number of events of the selected kind
-            [ ] Report on event numbers
-
-*/
 
 insert into nodes(name, ip)
 (
